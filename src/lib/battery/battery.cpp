@@ -210,7 +210,8 @@ float Battery::calculateStateOfChargeVoltageBased(const float voltage_v, const f
 
 	// correct battery voltage locally for load drop to avoid estimation fluctuations
 	if (_params.r_internal >= 0.f && current_a > FLT_EPSILON) {
-		cell_voltage += _params.r_internal * current_a;
+	//	cell_voltage += _params.r_internal * current_a;
+		cell_voltage -= _params.r_internal * current_a;
 
 	} else {
 		vehicle_thrust_setpoint_s vehicle_thrust_setpoint{};
@@ -276,8 +277,8 @@ void Battery::computeScale()
 
 	_scale = _params.v_charged / bat_v;
 
-	if (_scale > 1.3f) { // Allow at most 30% compensation
-		_scale = 1.3f;
+	if (_scale > 1.6f) { // Allow at most 30% compensation
+		_scale = 1.6f;
 
 	} else if (!PX4_ISFINITE(_scale) || _scale < 1.f) { // Shouldn't ever be more than the power at full battery
 		_scale = 1.f;
