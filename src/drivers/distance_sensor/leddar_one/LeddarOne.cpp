@@ -199,9 +199,13 @@ LeddarOne::measure()
 	return PX4_OK;
 }
 
+speed_t recorded_speed;
+int recorded_termios_state;
+
 int
 LeddarOne::open_serial_port(const speed_t speed)
 {
+	recorded_speed = speed;
 	// File descriptor already initialized?
 	if (_file_descriptor > 0) {
 		// PX4_INFO("serial port already open");
@@ -268,6 +272,7 @@ LeddarOne::open_serial_port(const speed_t speed)
 		return PX4_ERROR;
 	}
 
+
 	// Flush the hardware buffers.
 	tcflush(_file_descriptor, TCIOFLUSH);
 
@@ -281,6 +286,8 @@ LeddarOne::print_info()
 {
 	perf_print_counter(_comms_error);
 	perf_print_counter(_sample_perf);
+	PX4_INFO("opened UART port %s with baud rate %lu and %d", _serial_port, recorded_speed, recorded_termios_state);
+
 }
 
 void

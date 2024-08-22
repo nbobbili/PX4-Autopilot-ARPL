@@ -140,7 +140,7 @@ private:
 	 * Opens and configures the UART serial communications port.
 	 * @param speed The baudrate (speed) to configure the serial UART port.
 	 */
-	int open_serial_port(const speed_t speed = B115200);
+	int open_serial_port(const speed_t speed = B9600);
 
 	void Run() override;
 

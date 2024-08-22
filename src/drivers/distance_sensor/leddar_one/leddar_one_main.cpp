@@ -65,6 +65,7 @@ static int start(const char *port, const uint8_t rotation)
 
 	// Start the driver.
 	g_dev->start();
+	PX4_INFO("driver not running");
 
 	return PX4_OK;
 }
